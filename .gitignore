@@ -1,0 +1,12 @@
+*.DS_Store
+.idea
+.gradle
+*.rdb
+build/*
+out
+.metadata/*
+*.prefs
+.recommenders/*
+*.class
+*.jar
+*/target/*
