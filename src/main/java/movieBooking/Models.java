@@ -16,7 +16,7 @@ class City {
 class Cinema {
     Integer id;
     String name;
-    Integer cityId;
+    City city;
 }
 
 @Data
@@ -31,8 +31,8 @@ class Movie {
 class Show {
     Integer id;
     Movie movie;
-    Integer cinemaId;
-    Integer hallId;
+    Cinema cinema;
+    Hall hall;
     ShowTiming showTiming;
 }
 
