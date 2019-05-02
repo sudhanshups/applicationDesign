@@ -3,6 +3,7 @@ package movieBooking;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -19,9 +20,17 @@ class Cinema {
 }
 
 @Data
+class Movie {
+    Integer id;
+    String name;
+    Date releaseDate;
+    Integer lengthInMinutes;
+}
+
+@Data
 class Show {
     Integer id;
-    String movie;
+    Movie movie;
     Integer cinemaId;
     Integer hallId;
     ShowTiming showTiming;
@@ -57,7 +66,32 @@ class Ticket {
     Integer id;
     Integer customerId;
     Integer showId;
+    TicketStatus ticketStatus;
+    Double amount;
+    //provide show timings
+    //customer details
 }
 
+@Data
+class TicketBO {
+    Integer id;
+    Customer customer;
+    Show show;
+    TicketStatus ticketStatus;
+    Double amount;
+}
+
+enum TicketStatus {
+    CONFIRMED, CANCELED, PENDING
+}
+
+
+class MovieSearchRequest {
+    String title;
+    String language;
+    String genre;
+    Date releaseDate;
+    String cityName;
+}
 
 

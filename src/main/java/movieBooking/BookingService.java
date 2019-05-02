@@ -4,12 +4,13 @@ import java.util.List;
 
 public class BookingService {
 
-    List<Seat> getAvailableSeatsByHallIdAndShowTiming(Integer hallId, ShowTiming showTiming) {
+    private Ticket bookTicket(Integer customerId, Integer showId, Seat seat) {
         return null;
     }
 
-    Ticket bookTicket(Integer customerId, Integer showId, Seat seat) {
+    public TicketBO bookTicketForCustomer(Integer customerId, Integer showId, Seat seat) {
         return null;
     }
+
 
 }
