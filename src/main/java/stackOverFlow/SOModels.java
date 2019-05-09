@@ -25,7 +25,7 @@ enum Badge {
 }
 
 class System {
-    private Map<String, Integer> tagsFrequency = new HashMap<>();
+    private static Map<String, Integer> tagsFrequency = new HashMap<>();
 
     public void increaseTagFrequency(String tag) {
         if (!tagsFrequency.containsKey(tag)) {
@@ -162,6 +162,8 @@ abstract class Post implements Vote {
     Integer downVotes;
     Integer flagReported;
 
+    String description;
+
     @Override
     public Integer getId() {
         return id;
@@ -179,12 +181,18 @@ abstract class Post implements Vote {
 
 @Data
 class Question extends Post {
+    String title;
     Integer bounty;
+    Tag tag;
+
     Integer closeVotes;
     Integer deleteVotes;
+
     boolean isClosed;
     boolean isDeleted;
-    Tag tag;
+
+    List<String> imageUrls;
+
 
     Question(Tag tag) {
         this.tag = tag;
@@ -206,6 +214,8 @@ class Question extends Post {
 }
 
 class Answer extends Post {
+    boolean isAccepted;
+    List<String> imageUrls;
     @Override
     public PostType getPostType() {
         return PostType.ANSWER;
