@@ -1,8 +1,6 @@
 package parkingLot;
 
 
-import java.util.List;
-
 class Person {
     private String name;
     private String address;
@@ -29,7 +27,7 @@ class ParkingAttendant extends Account {
 }
 
 
-class Admin extends Account{
+class Admin extends Account {
 
     public boolean addParkingFloor(ParkingFloor floor) {
         return true;
@@ -43,7 +41,7 @@ class Admin extends Account{
         return true;
     }
 
-    /*public boolean addCustomerInfoPanel(String floorName, CustomerInfoPanel infoPanel) {
+    public boolean addCustomerInfoPanel(String floorName, CustomerInfoPortal infoPanel) {
         return true;
     }
 
@@ -53,7 +51,7 @@ class Admin extends Account{
 
     public boolean addExitPanel(ExitPanel exitPanel) {
         return true;
-    }*/
+    }
 }
 
 /*

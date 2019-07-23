@@ -8,6 +8,13 @@ import java.util.Map;
 import java.util.Set;
 
 
+public class SOModels {
+    public static void main(String[] args) {
+
+
+    }
+}
+
 enum AccountStatus {
     ACTIVE, BLOCKED, BANNED, COMPROMISED, ARCHIVED, UNKNOWN
 }
@@ -61,21 +68,6 @@ class Tag {
 class Guest {
     boolean registerAccount() {
         return true;
-    }
-}
-
-@Data
-abstract class Account {
-    private String id;
-    private String password;
-    private AccountStatus status;
-
-    private String name;
-    private String email;
-    private String phone;
-
-    boolean resetPassword() {
-        return true;//should be implemented by different actors
     }
 }
 
@@ -211,11 +203,20 @@ class Question extends Post {
         return ++deleteVotes;
     }
 
+    void setClosed(boolean a) {
+        isClosed = a;
+    }
+
+    void setDeleted(boolean a) {
+        isDeleted = a;
+    }
+
 }
 
 class Answer extends Post {
     boolean isAccepted;
     List<String> imageUrls;
+
     @Override
     public PostType getPostType() {
         return PostType.ANSWER;

@@ -141,6 +141,10 @@ class ParkingTicket {
     TicketStatus status;
     //    Vehicle vehicle;
 //    ParkingSpot parkingSpot;
+
+    String getTicketNumber(){
+        return ticketNumber;
+    }
 }
 
 class ParkingRate {
@@ -151,10 +155,6 @@ class ParkingRate {
 
 enum VehicleType {
     CAR, TRUCK, VAN, MOTORCYCLE, ELECTRIC;
-}
-
-enum SpotType {
-    COMPACT, LARGE, HANDICAPPED, MOTORCYCLE, ELECTRIC;
 }
 
 enum TicketStatus {

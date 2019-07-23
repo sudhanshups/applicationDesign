@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.util.HashMap;
 
+@Data
 public class ParkingFloor {
     private String name;
     private HashMap<String, ParkingSpot> handicappedSpots;
@@ -75,30 +76,5 @@ public class ParkingFloor {
             default:
                 System.out.println("Wrong parking spot type!");
         }
-    }
-}
-
-@Data
-class ParkingDisplayBoard {
-    private String id;
-    private ParkingSpot handicappedFreeSpot;
-    private ParkingSpot electricFreeSpot;
-
-    public void showEmptySpotNumber() {
-        String message = "";
-        if (handicappedFreeSpot.IsFree()) {
-            message += "Free Handicapped: " + handicappedFreeSpot.getNumber();
-        } else {
-            message += "Handicapped is full";
-        }
-        message += System.lineSeparator();
-
-        if (electricFreeSpot.IsFree()) {
-            message += "Free Electric: " + electricFreeSpot.getNumber();
-        } else {
-            message += "Electric is full";
-        }
-
-        System.out.println(message);
     }
 }

@@ -61,6 +61,9 @@ class DoublyLinkedList {
 			head = head.next;
 			if (head != null)
 				head.prev = null;
+			else {
+				tail = null;
+			}
 		}
 		size--;
 		return n;
@@ -78,7 +81,7 @@ class DoublyLinkedList {
 	}
 
 	void updateToEnd(Node n) {
-		if (tail == n && size == 1) {
+		if (tail == n || size == 1) {
 			return;
 		} else if (head == n) {
 			head = head.next;

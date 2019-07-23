@@ -2,13 +2,24 @@ package parkingLot;
 
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
+@Getter
+@Setter
 public abstract class ParkingSpot {
     private String number;
     private boolean free;
     private Vehicle vehicle;
     private final SpotType type;
+
+    SpotType getType(){
+        return type;
+    }
+    String getNumber(){
+        return number;
+    }
 
     abstract public boolean IsFree();
 
