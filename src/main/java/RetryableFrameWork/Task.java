@@ -16,11 +16,13 @@ public abstract class Task {
     }
 
     final void start() {
-        execute();
+        System.out.println("in start ");
         status = 2;
         if (strategy.TOTAL_RETRY_REQUIRED == strategy.retryCount) {
             status = 3;
+            return;
         }
+        execute();
     }
 
     abstract void execute() throws RuntimeException;
@@ -52,9 +54,7 @@ class TaskExecutor extends Thread {
     }
 
     public void run() {
-        int i = 0;
         while (true) {
-            i++;
             try {
                 Thread.sleep(1000);
                 //System.out.println("slept for 1 sec for " + i);
@@ -68,7 +68,7 @@ class TaskExecutor extends Thread {
             Task currentTask = tasks.poll();
             if (currentTask.status == 3) {
                 continue;
-            }else if (currentTask.nextRunMili > System.currentTimeMillis()){
+            } else if (currentTask.nextRunMili > System.currentTimeMillis()) {
                 tasks.add(currentTask);
                 continue;
             }
@@ -79,11 +79,11 @@ class TaskExecutor extends Thread {
                 currentTask.start();
             } catch (RuntimeException e) {
                 System.out.println(currentTask.name + " Exception is caught. " + e.getMessage());
-                currentTask.nextRunMili = currentTask.strategy.nextRun(currentTask.nextRunMili);
-                tasks.add(currentTask);
-            }/* catch (InterruptedException e) {
-
-            }*/
+                if (currentTask.status != 3) {
+                    currentTask.nextRunMili = currentTask.strategy.nextRun(currentTask.nextRunMili);
+                    tasks.add(currentTask);
+                }
+            }
         }
     }
 
