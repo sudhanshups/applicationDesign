@@ -1,8 +1,11 @@
 package LoggingObserver;
 
+import lombok.Data;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Data
 public class Logger extends Subject {
 
     Map<MessageType, Boolean> messageStatusMap = new HashMap<>();
