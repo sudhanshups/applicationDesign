@@ -1,37 +1,56 @@
 package RetryableFrameWork;
 
 import java.util.Date;
-import java.util.PriorityQueue;
+
+enum TASK_STATUS {
+    SCHEDULED, IN_PROGRESS, FAILED, FINISHED
+}
 
 public abstract class Task {
-    long nextRunMili;
-    RetryStrategy strategy;
-    String name;
-    int status = 0; //0-start , 1- inprogress,2-halted, 3 done;
+    final int TOTAL_RETRY_REQUIRED;
+    private RetryStrategy strategy;
+    String taskName;
+    TASK_STATUS status;
+    private int retryCount = 0;
+    private long firstRun;
+    long nextRunMilli;
 
-    Task(String name, RetryStrategy retryStrategy, long nextRunMili) {
-        this.name = name;
+    Task(String name, int totalRetries, RetryStrategy retryStrategy, long nextRunMilli) {
+        this.taskName = name;
+        TOTAL_RETRY_REQUIRED = totalRetries;
         this.strategy = retryStrategy;
-        this.nextRunMili = nextRunMili;
+        this.nextRunMilli = nextRunMilli;
+        this.status = TASK_STATUS.SCHEDULED;
     }
 
     final void start() {
-        System.out.println("in start ");
-        status = 2;
-        if (strategy.TOTAL_RETRY_REQUIRED == strategy.retryCount) {
-            status = 3;
-            return;
+        System.out.println(new Date() + " starting the task");
+        if (TASK_STATUS.SCHEDULED.equals(status)) {
+            firstRun = System.currentTimeMillis();
         }
-        execute();
+        status = TASK_STATUS.IN_PROGRESS;
+        retryCount++;
+        try {
+            execute(); //TODO execute it in async And Get Status Back
+            status = TASK_STATUS.FINISHED;
+        } catch (RuntimeException e) {
+            if (TOTAL_RETRY_REQUIRED == retryCount) {
+                status = TASK_STATUS.FINISHED;
+            } else {
+                status = TASK_STATUS.FAILED;
+                nextRunMilli = strategy.nextRunTime(firstRun, retryCount);
+                System.out.println(new Date() + " == next Execution Time" + new Date(nextRunMilli));
+            }
+            throw e;
+        }
     }
 
     abstract void execute() throws RuntimeException;
 }
 
 class ComputePie extends Task {
-
-    ComputePie(String name, RetryStrategy retryStrategy, long nextRunMili) {
-        super(name, retryStrategy, nextRunMili);
+    ComputePie(String name, int totalRetries, RetryStrategy retryStrategy, long nextRunMili) {
+        super(name, totalRetries, retryStrategy, nextRunMili);
     }
 
     int i = 0;
@@ -39,53 +58,10 @@ class ComputePie extends Task {
     @Override
     void execute() throws RuntimeException {
         i++;
+        //Test Exception thrown
         System.out.println(i + "th Iteration, Calculate 22/7 =" + 22 / 7);
-        if (i != 5) {
+        if (i != 2) {
             throw new RuntimeException(i + "th Iteration, Exception while calculation");
         }
     }
-}
-
-class TaskExecutor extends Thread {
-    PriorityQueue<Task> tasks = new PriorityQueue<>((a, b) -> (int) (a.nextRunMili - b.nextRunMili));
-
-    void add(Task a) {
-        tasks.add(a);
-    }
-
-    public void run() {
-        while (true) {
-            try {
-                Thread.sleep(1000);
-                //System.out.println("slept for 1 sec for " + i);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if (tasks.isEmpty()) {
-                System.out.println("nothing to run");
-                return;
-            }
-            Task currentTask = tasks.poll();
-            if (currentTask.status == 3) {
-                continue;
-            } else if (currentTask.nextRunMili > System.currentTimeMillis()) {
-                tasks.add(currentTask);
-                continue;
-            }
-
-            try {
-                System.out.println();
-                System.out.println(new Date() + " Executing " + currentTask.name);
-                currentTask.start();
-            } catch (RuntimeException e) {
-                System.out.println(currentTask.name + " Exception is caught. " + e.getMessage());
-                if (currentTask.status != 3) {
-                    currentTask.nextRunMili = currentTask.strategy.nextRun(currentTask.nextRunMili);
-                    tasks.add(currentTask);
-                }
-            }
-        }
-    }
-
-
 }

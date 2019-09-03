@@ -1,11 +1,13 @@
 package LoggingObserver;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class Logger extends Subject {
 
     Map<MessageType, Boolean> messageStatusMap = new HashMap<>();

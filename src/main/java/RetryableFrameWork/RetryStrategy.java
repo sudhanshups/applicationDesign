@@ -1,41 +1,32 @@
 package RetryableFrameWork;
 
-public abstract class RetryStrategy {
-    int TOTAL_RETRY_REQUIRED = 3;
-    int retryCount = 0;
-
-    abstract long nextRun(long nextRunMili);
+interface RetryStrategy {
+    long nextRunTime(long firstRun, int retryCount);
 }
 
-class ExponentialRetry extends RetryStrategy {
+class ExponentialBackOffRetry implements RetryStrategy {
     final int EXPONENT = 2;
 
-    long nextRun(long nextRunMili) {
-        if (System.currentTimeMillis() < nextRunMili) {
-            return nextRunMili;
+    public long nextRunTime(long firstRun, int retryCount) {
+        long timeToAdd = 0;
+        for (int i = 1; i <= retryCount; i++) {
+            timeToAdd += (long) Math.pow(EXPONENT, i) * 1000;
         }
-        retryCount++;
-        return (long) (System.currentTimeMillis() + Math.pow(EXPONENT, retryCount) * 1000);
+        return firstRun + timeToAdd;
     }
 
-    ExponentialRetry(int totalRetryRequired) {
-        this.TOTAL_RETRY_REQUIRED = totalRetryRequired;
+    ExponentialBackOffRetry() {
     }
 }
 
-class IncrementalRetry extends RetryStrategy {
+class IncrementalRetry implements RetryStrategy {
     long RETRY_INTERVAL;
 
-    long nextRun(long nextRunMili) {
-        if (System.currentTimeMillis() < nextRunMili) {
-            return nextRunMili;
-        }
-        retryCount++;
-        return System.currentTimeMillis() + RETRY_INTERVAL * 1000;
+    public long nextRunTime(long firstRun, int retryCount) {
+        return (firstRun + retryCount * RETRY_INTERVAL * 1000);
     }
 
-    IncrementalRetry(int totalRetryRequired, long retryInterval) {
-        this.TOTAL_RETRY_REQUIRED = totalRetryRequired;
+    IncrementalRetry(long retryInterval) {
         this.RETRY_INTERVAL = retryInterval;
     }
 }

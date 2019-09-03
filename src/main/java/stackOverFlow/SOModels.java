@@ -1,6 +1,7 @@
 package stackOverFlow;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -72,6 +73,7 @@ class Guest {
 }
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 class Member extends Account {
     private List<Badge> badge;
 
@@ -172,6 +174,7 @@ abstract class Post implements Vote {
 }
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 class Question extends Post {
     String title;
     Integer bounty;
