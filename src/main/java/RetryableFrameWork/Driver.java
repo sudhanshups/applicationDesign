@@ -9,10 +9,9 @@ public class Driver {
 
         Task a = new ComputePie("ComputePie Task", 3, exponentialRetry,
                 System.currentTimeMillis() + 3 * 1000);
-        TaskExecutor taskExecutor = new TaskExecutor();
-        taskExecutor.add(a);
-
-        taskExecutor.start();
+        TaskScheduler taskScheduler = TaskScheduler.getInstance();
+        taskScheduler.schedule(a);
+        taskScheduler.run();
 
         System.out.println("end=======");
     }

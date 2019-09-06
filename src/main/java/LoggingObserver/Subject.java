@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @Data
-public class Subject {
+public abstract class Subject {
 
     Map<MessageType, List<Observer>> registryMap = new HashMap<>();
     String data;

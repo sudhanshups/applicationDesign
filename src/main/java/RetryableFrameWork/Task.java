@@ -24,24 +24,26 @@ public abstract class Task {
     }
 
     final void start() {
-        System.out.println(new Date() + " starting the task");
+        System.out.println(new Date() + ": " + taskName + " -starting the task");
         if (TASK_STATUS.SCHEDULED.equals(status)) {
             firstRun = System.currentTimeMillis();
         }
         status = TASK_STATUS.IN_PROGRESS;
         retryCount++;
+
         try {
-            execute(); //TODO execute it in async And Get Status Back
+            execute();
             status = TASK_STATUS.FINISHED;
         } catch (RuntimeException e) {
+            System.out.println(new Date() + ": " + taskName + " -failed the task");
             if (TOTAL_RETRY_REQUIRED == retryCount) {
                 status = TASK_STATUS.FINISHED;
             } else {
                 status = TASK_STATUS.FAILED;
                 nextRunMilli = strategy.nextRunTime(firstRun, retryCount);
-                System.out.println(new Date() + " == next Execution Time" + new Date(nextRunMilli));
+                System.out.println(new Date() + ": " + taskName + " == next Execution Time" + new Date(nextRunMilli));
+                throw e;
             }
-            throw e;
         }
     }
 
@@ -60,7 +62,7 @@ class ComputePie extends Task {
         i++;
         //Test Exception thrown
         System.out.println(i + "th Iteration, Calculate 22/7 =" + 22 / 7);
-        if (i != 2) {
+        if (i != 3) {
             throw new RuntimeException(i + "th Iteration, Exception while calculation");
         }
     }
