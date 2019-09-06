@@ -30,12 +30,15 @@ public class TaskScheduler {
         return tasks.poll();
     }
 
+    synchronized Task showScheduledTask() {
+        return tasks.peek();
+    }
 
     public void run() {
-        int i=0;
-        while (i<20) {
-            if (tasks.isEmpty()) {
-                System.out.println(" === nothing to run ("+i+"/20) ==");
+        int i = 0;
+        while (i < 20) {
+            if (tasks.isEmpty() || showScheduledTask().nextRunMilli > System.currentTimeMillis()) {
+                //System.out.println(" === nothing to run (" + i + "/20) ==");
                 try {
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {

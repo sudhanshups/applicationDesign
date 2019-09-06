@@ -34,14 +34,15 @@ public abstract class Task {
         try {
             execute();
             status = TASK_STATUS.FINISHED;
+            System.out.println(new Date() + ": " + taskName + " -Finished the task");
         } catch (RuntimeException e) {
-            System.out.println(new Date() + ": " + taskName + " -failed the task");
             if (TOTAL_RETRY_REQUIRED == retryCount) {
                 status = TASK_STATUS.FINISHED;
+                System.out.println(new Date() + ": " + taskName + " -failed the task");
             } else {
                 status = TASK_STATUS.FAILED;
                 nextRunMilli = strategy.nextRunTime(firstRun, retryCount);
-                System.out.println(new Date() + ": " + taskName + " == next Execution Time" + new Date(nextRunMilli));
+                System.out.println(new Date() + ": " + taskName + " -failed the task. == next Execution Time" + new Date(nextRunMilli));
                 throw e;
             }
         }
@@ -61,8 +62,24 @@ class ComputePie extends Task {
     void execute() throws RuntimeException {
         i++;
         //Test Exception thrown
-        System.out.println(i + "th Iteration, Calculate 22/7 =" + 22 / 7);
-        if (i != 3) {
+        if (i != 2) {
+            throw new RuntimeException(i + "th Iteration, Exception while calculation");
+        }
+    }
+}
+
+class Multiply extends Task {
+    Multiply(String name, int totalRetries, RetryStrategy retryStrategy, long nextRunMili) {
+        super(name, totalRetries, retryStrategy, nextRunMili);
+    }
+
+    int i = 0;
+
+    @Override
+    void execute() throws RuntimeException {
+        i++;
+        //Test Exception thrown
+        if (i != 2) {
             throw new RuntimeException(i + "th Iteration, Exception while calculation");
         }
     }
