@@ -1,7 +1,13 @@
 package LoggingObserver;
 
 public enum MessageType {
-    ERROR,
-    WARNING,
-    GENERAL
+    ERROR(3),
+    WARNING(2),
+    GENERAL(1);
+
+    int priority;
+
+    MessageType(int pri) {
+        priority = pri;
+    }
 }

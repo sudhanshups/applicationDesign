@@ -25,7 +25,14 @@ public abstract class Subject {
         if (!registryMap.containsKey(messageType)) {
             registryMap.put(messageType, new ArrayList<>());
         }
+
         registryMap.get(messageType).add(pObsrvr);
+        if (messageType.priority < MessageType.WARNING.priority) {
+            registryMap.get(MessageType.WARNING).add(pObsrvr);
+        }
+        if (messageType.priority < MessageType.ERROR.priority) {
+            registryMap.get(MessageType.ERROR).add(pObsrvr);
+        }
     }
 
     public void detach(Observer observer) {
