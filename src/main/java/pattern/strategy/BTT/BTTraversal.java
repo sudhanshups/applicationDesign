@@ -1,4 +1,4 @@
-package strategy.BTT;
+package pattern.strategy.BTT;
 
 class TreeNode {
     int value;

@@ -1,4 +1,4 @@
-package strategy.sorting;
+package pattern.strategy.sorting;
 /*
 28/07/19-8:25 PM
 */

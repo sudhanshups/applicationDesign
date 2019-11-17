@@ -1,4 +1,4 @@
-package builder.pattern;
+package pattern.builder;
 
 class Director {
 

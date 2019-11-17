@@ -1,4 +1,4 @@
-package builder.pattern;
+package pattern.builder;
 
 
 abstract class AircraftBuilder {

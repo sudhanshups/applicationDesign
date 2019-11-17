@@ -1,4 +1,4 @@
-package strategy.BTT;
+package pattern.strategy.BTT;
 
 public class driver {
     static TreeNode createTree(int left, int val, int right) {

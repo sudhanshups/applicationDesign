@@ -1,4 +1,4 @@
-package strategy.BTT;
+package pattern.strategy.BTT;
 
 public abstract class NodeVisitor {
     void beforeVisitingLeftChild(TreeNode node) {

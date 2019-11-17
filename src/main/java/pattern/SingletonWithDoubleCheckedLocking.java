@@ -1,4 +1,4 @@
-package singleton.pattern;
+package pattern;
 
 public class SingletonWithDoubleCheckedLocking {
 
