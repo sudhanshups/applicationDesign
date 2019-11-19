@@ -15,9 +15,9 @@ public abstract class Chessman {
     private Colour colour;
     private ChessBoard chessBoard;
 
-    abstract protected MoveType canMove(Point p);
+    abstract public MoveType canMove(Point p);
 
-    abstract void TryToMove(Point p);
+    abstract public void TryToMove(Point p);
 
     public abstract char getSymbol();
 

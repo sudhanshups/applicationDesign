@@ -15,6 +15,6 @@ public class Match {
 		board.printChessBoard();
 
 		board.getChessmanAt(new Point(1,'c'));
-
+		board.getChessmanAt(new Point(1,'c'));
 	}
 }

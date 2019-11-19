@@ -6,6 +6,7 @@ Develop a solution for sharing expense
 2. User should be able to view pending balances with other user
 3. User should be able to record payment statement to clear balances with a user.
 
+-- simplify is not in the scope.
 Expectations :
 
 CLear professional code

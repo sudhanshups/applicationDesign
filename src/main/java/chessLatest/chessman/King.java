@@ -17,12 +17,12 @@ public class King extends Chessman {
 
 
     @Override
-    protected MoveType canMove(Point p) {
+    public  MoveType canMove(Point p) {
         return null;
     }
 
     @Override
-    void TryToMove(Point p) {
+    public void TryToMove(Point p) {
 
     }
 
