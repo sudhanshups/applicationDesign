@@ -14,7 +14,8 @@ public class Match {
 		ChessBoard board = new ChessBoard();
 		board.printChessBoard();
 
-		board.getChessmanAt(new Point(1,'c'));
-		board.getChessmanAt(new Point(1,'c'));
+		Point from = new Point(1,'c');
+		Point to = new Point(1,'d');
+		board.getChessmanAt(from).TryToMove(to);
 	}
 }

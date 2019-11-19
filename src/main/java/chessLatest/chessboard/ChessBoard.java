@@ -74,7 +74,7 @@ public class ChessBoard {
                 .findFirst().orElse(-1)).getChessman();
     }
 
-    void placeChessmanAt(Chessman chessman, Point pt) {
+    public void placeChessmanAt(Chessman chessman, Point pt) {
         // place piece p at location pt
     }
 

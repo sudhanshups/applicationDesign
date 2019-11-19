@@ -4,7 +4,6 @@ import chessLatest.chessman.Chessman;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Data

@@ -16,7 +16,7 @@ public class Bishop extends Chessman {
     }
 
     @Override
-    public MoveType canMove(Point p) {
+    protected MoveType canMove(Point p) {
         return null;
     }
 

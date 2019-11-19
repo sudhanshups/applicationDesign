@@ -18,13 +18,14 @@ public class Pawn extends Chessman {
     }
 
     @Override
-    public  MoveType canMove(Point p) {
+    protected MoveType canMove(Point p) {
         return null;
     }
 
     @Override
     public void TryToMove(Point p) {
-
+        MoveType moveType = canMove(p);
+        getChessBoard().placeChessmanAt(this,p);
     }
 
     @Override
